@@ -8,7 +8,7 @@ class HeadersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HeaderPeak(),
+      body: HeaderCircular(),
     );
   }
 }
