@@ -20,10 +20,47 @@ class RectangleAnimated extends StatefulWidget {
   _RectangleAnimatedState createState() => _RectangleAnimatedState();
 }
 
-class _RectangleAnimatedState extends State<RectangleAnimated> {
+class _RectangleAnimatedState extends State<RectangleAnimated>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+  Animation<double> rotation;
+
+  @override
+  void initState() {
+    animationController = new AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 4000),
+    );
+
+    rotation = Tween(
+      begin: 0.0,
+      end: 2.0,
+    ).animate(animationController);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _Rectangle();
+    //* Play animation.
+    animationController.forward();
+
+    return AnimatedBuilder(
+      animation: animationController,
+      child: _Rectangle(), //* Optional.
+      builder: (BuildContext context, Widget child) {
+        return Transform.rotate(
+          angle: rotation.value,
+          child: child,
+        );
+      },
+    );
   }
 }
 
