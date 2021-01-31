@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as Math;
 
 class AnimationsPage extends StatelessWidget {
   const AnimationsPage({Key key}) : super(key: key);
@@ -34,8 +35,15 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
 
     rotation = Tween(
       begin: 0.0,
-      end: 2.0,
+      end: 2.0 * Math.pi,
     ).animate(animationController);
+
+    animationController.addListener(() { 
+      print('Stauts: ${animationController.status}');
+      if (animationController.isCompleted) {
+        animationController.reverse();
+      }
+    });
 
     super.initState();
   }
