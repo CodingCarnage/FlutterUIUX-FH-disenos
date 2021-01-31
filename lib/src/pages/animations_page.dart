@@ -30,18 +30,23 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
   void initState() {
     animationController = new AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 4000),
+      duration: Duration(milliseconds: 1000),
     );
 
     rotation = Tween(
       begin: 0.0,
-      end: 2.0 * Math.pi,
-    ).animate(animationController);
+      end: Math.pi / 2,
+    ).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Curves.easeOutQuart
+      )
+    );
 
     animationController.addListener(() { 
       print('Stauts: ${animationController.status}');
       if (animationController.isCompleted) {
-        animationController.reverse();
+        animationController.reset();
       }
     });
 
@@ -78,10 +83,11 @@ class _Rectangle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 70,
+      width: 100,
       height: 70,
       decoration: BoxDecoration(
         color: Colors.indigo,
+        borderRadius: BorderRadius.circular(10.0)
       ),
     );
   }
