@@ -21,8 +21,7 @@ class RectangleAnimated extends StatefulWidget {
   _RectangleAnimatedState createState() => _RectangleAnimatedState();
 }
 
-class _RectangleAnimatedState extends State<RectangleAnimated>
-    with SingleTickerProviderStateMixin {
+class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> rotation;
 
@@ -36,14 +35,12 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
     rotation = Tween(
       begin: 0.0,
       end: Math.pi / 2,
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeOutQuart
-      )
-    );
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeOutQuart,
+    ));
 
-    animationController.addListener(() { 
+    animationController.addListener(() {
       print('Stauts: ${animationController.status}');
       if (animationController.isCompleted) {
         animationController.reset();
@@ -87,7 +84,7 @@ class _Rectangle extends StatelessWidget {
       height: 70,
       decoration: BoxDecoration(
         color: Colors.indigo,
-        borderRadius: BorderRadius.circular(10.0)
+        borderRadius: BorderRadius.circular(10.0),
       ),
     );
   }
