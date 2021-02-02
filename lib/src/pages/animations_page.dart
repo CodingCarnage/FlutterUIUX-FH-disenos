@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as Math;
 
@@ -21,10 +23,12 @@ class RectangleAnimated extends StatefulWidget {
   _RectangleAnimatedState createState() => _RectangleAnimatedState();
 }
 
-class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTickerProviderStateMixin {
+class _RectangleAnimatedState extends State<RectangleAnimated>
+    with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> rotation;
   Animation<double> opacity;
+  Animation<double> movement;
 
   @override
   void initState() {
@@ -52,10 +56,15 @@ class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTicker
         //* Animation starts at half the time defined in the animationController.
         0.5,
         //* Animation ends at the end of time defined in the animationController.
-        1,
+        1.0,
         curve: Curves.easeOutQuart,
       ),
     ));
+
+    movement = Tween(
+      begin: 0.0,
+      end: 200.0,
+    ).animate(animationController);
 
     animationController.addListener(() {
       print('Stauts: ${animationController.status}');
@@ -82,11 +91,14 @@ class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTicker
       animation: animationController,
       child: _Rectangle(), //* Optional.
       builder: (BuildContext context, Widget child) {
-        return Transform.rotate(
-          angle: rotation.value,
-          child: Opacity(
-            opacity: opacity.value,
-            child: child,
+        return Transform.translate(
+          offset: Offset(movement.value, 0.0),
+          child: Transform.rotate(
+            angle: rotation.value,
+            child: Opacity(
+              opacity: opacity.value,
+              child: child,
+            ),
           ),
         );
       },
