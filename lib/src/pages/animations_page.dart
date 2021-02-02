@@ -30,18 +30,32 @@ class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTicker
   void initState() {
     animationController = new AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 2000),
+      duration: Duration(milliseconds: 4000),
     );
 
     rotation = Tween(
+      //* Value at the start of the animation.
       begin: 0.0,
+      //* Value at the end of the animation.
       end: Math.pi * 2,
     ).animate(CurvedAnimation(
       parent: animationController,
       curve: Curves.easeOutQuart,
     ));
 
-    opacity = Tween(begin: 0.1, end: 1.0).animate(animationController);
+    opacity = Tween(
+      begin: 0.1,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Interval(
+        //* Animation starts at half the time defined in the animationController.
+        0.5,
+        //* Animation ends at the end of time defined in the animationController.
+        1,
+        curve: Curves.easeOutQuart,
+      ),
+    ));
 
     animationController.addListener(() {
       print('Stauts: ${animationController.status}');
