@@ -28,6 +28,7 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
   AnimationController animationController;
   Animation<double> rotation;
   Animation<double> opacity;
+  Animation<double> opacityOut;
   Animation<double> movement;
   Animation<double> size;
 
@@ -54,11 +55,21 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
     ).animate(CurvedAnimation(
       parent: animationController,
       curve: Interval(
-        //* Animation starts at a quarter of the time defined in the animationController.
+        0.0,
         0.25,
-        //* Animation ends at the end of time defined in the animationController.
+        curve: Curves.easeOut,
+      ),
+    ));
+    
+    opacityOut = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Interval(
+        0.75,
         1.0,
-        curve: Curves.easeOutQuart,
+        curve: Curves.easeOut,
       ),
     ));
 
@@ -73,12 +84,12 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
     ).animate(animationController);
 
     animationController.addListener(() {
-      print('Stauts: ${animationController.status}');
+      // print('Stauts: ${animationController.status}');
       if (animationController.isCompleted) {
-        animationController.reverse();
-      } else if (animationController.isDismissed) {
-        animationController.forward();
-      }
+        animationController.reset();
+      }// else if (animationController.isDismissed) {
+      //   animationController.forward();
+      // }
     });
 
     super.initState();
@@ -104,7 +115,7 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
           child: Transform.rotate(
             angle: rotation.value,
             child: Opacity(
-              opacity: opacity.value,
+              opacity: opacity.value - opacityOut.value,
               child: Transform.scale(
                 scale: size.value,
                 child: child,
