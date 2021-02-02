@@ -24,21 +24,24 @@ class RectangleAnimated extends StatefulWidget {
 class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> rotation;
+  Animation<double> opacity;
 
   @override
   void initState() {
     animationController = new AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 2000),
     );
 
     rotation = Tween(
       begin: 0.0,
-      end: Math.pi / 2,
+      end: Math.pi * 2,
     ).animate(CurvedAnimation(
       parent: animationController,
       curve: Curves.easeOutQuart,
     ));
+
+    opacity = Tween(begin: 0.1, end: 1.0).animate(animationController);
 
     animationController.addListener(() {
       print('Stauts: ${animationController.status}');
@@ -67,7 +70,10 @@ class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTicker
       builder: (BuildContext context, Widget child) {
         return Transform.rotate(
           angle: rotation.value,
-          child: child,
+          child: Opacity(
+            opacity: opacity.value,
+            child: child,
+          ),
         );
       },
     );
