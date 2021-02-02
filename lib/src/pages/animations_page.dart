@@ -29,6 +29,7 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
   Animation<double> rotation;
   Animation<double> opacity;
   Animation<double> movement;
+  Animation<double> size;
 
   @override
   void initState() {
@@ -53,8 +54,8 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
     ).animate(CurvedAnimation(
       parent: animationController,
       curve: Interval(
-        //* Animation starts at half the time defined in the animationController.
-        0.5,
+        //* Animation starts at a quarter of the time defined in the animationController.
+        0.25,
         //* Animation ends at the end of time defined in the animationController.
         1.0,
         curve: Curves.easeOutQuart,
@@ -65,11 +66,18 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
       begin: 0.0,
       end: 200.0,
     ).animate(animationController);
+    
+    size = Tween(
+      begin: 0.0,
+      end: 2.0,
+    ).animate(animationController);
 
     animationController.addListener(() {
       print('Stauts: ${animationController.status}');
       if (animationController.isCompleted) {
-        animationController.reset();
+        animationController.reverse();
+      } else if (animationController.isDismissed) {
+        animationController.forward();
       }
     });
 
@@ -97,7 +105,10 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
             angle: rotation.value,
             child: Opacity(
               opacity: opacity.value,
-              child: child,
+              child: Transform.scale(
+                scale: size.value,
+                child: child,
+              ),
             ),
           ),
         );
