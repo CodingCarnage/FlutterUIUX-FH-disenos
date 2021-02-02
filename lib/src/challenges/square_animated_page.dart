@@ -20,12 +20,76 @@ class _SquareAnimated extends StatefulWidget {
   __SquareAnimatedState createState() => __SquareAnimatedState();
 }
 
-class __SquareAnimatedState extends State<_SquareAnimated> {
+class __SquareAnimatedState extends State<_SquareAnimated>
+    with SingleTickerProviderStateMixin {
   AnimationController animationController;
+  Animation<double> movementRight;
+  Animation<double> movementLeft;
+  Animation<double> movementUp;
+  Animation<double> movementDown;
 
   @override
   void initState() {
     super.initState();
+
+    animationController = new AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 4500),
+    );
+
+    movementRight = Tween(
+      begin: 0.0,
+      end: 100.0,
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Interval(
+        0.0,
+        0.25,
+        curve: Curves.bounceOut,
+      ),
+    ));
+
+    movementUp = Tween(
+      begin: 0.0,
+      end: -100.0,
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Interval(
+        0.25,
+        0.50,
+        curve: Curves.bounceOut,
+      ),
+    ));
+
+    movementLeft = Tween(
+      begin: 100.0,
+      end: 0.0,
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Interval(
+        0.50,
+        0.75,
+        curve: Curves.bounceOut,
+      ),
+    ));
+
+    movementDown = Tween(
+      begin: -100.0,
+      end: 0.0,
+    ).animate(CurvedAnimation(
+      parent: animationController,
+      curve: Interval(
+        0.75,
+        1.0,
+        curve: Curves.bounceOut,
+      ),
+    ));
+
+    animationController.addListener(() {
+      if (animationController.isCompleted) {
+        animationController.reset();
+      }
+    });
   }
 
   @override
@@ -36,7 +100,25 @@ class __SquareAnimatedState extends State<_SquareAnimated> {
 
   @override
   Widget build(BuildContext context) {
-    return _Rectangle();
+    animationController.forward();
+    
+    return AnimatedBuilder(
+      animation: animationController,
+      child: _Rectangle(),
+      builder: (BuildContext context, Widget child) {
+        return Transform.translate(
+          offset: Offset(
+              movementRight.value == 100.0
+                  ? movementLeft.value
+                  : movementRight.value,
+              movementUp.value == -100.0
+                  ? movementDown.value
+                  : movementUp.value
+          ),
+          child: child,
+        );
+      },
+    );
   }
 }
 
