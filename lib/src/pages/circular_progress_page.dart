@@ -10,6 +10,8 @@ class CircularProgressPage extends StatefulWidget {
 }
 
 class _CircularProgressPageState extends State<CircularProgressPage> {
+  double percentage = 10;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +22,21 @@ class _CircularProgressPageState extends State<CircularProgressPage> {
           height: 300.0,
           // color: Colors.deepPurpleAccent,
           child: CustomPaint(
-            painter: _RadialProgressPainter(percentage: 50.0),
+            painter: _RadialProgressPainter(percentage: percentage),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            percentage += 10;
+            if (percentage == 100) {
+              percentage = 0;
+            }
+          });
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.pinkAccent,
       ),
     );
   }
