@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as Math;
 
 import 'package:flutter/material.dart';
 
@@ -57,7 +57,7 @@ class _RadialProgressPainter extends CustomPainter {
       ..color = Colors.grey
       ..style = PaintingStyle.stroke;
     final Offset center = new Offset(size.width / 2, size.height / 2);
-    final double radius = min(size.width / 2, size.height / 2);
+    final double radius = Math.min(size.width / 2, size.height / 2);
 
     canvas.drawCircle(center, radius, paint);
 
@@ -68,11 +68,11 @@ class _RadialProgressPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     //* Parts to fill.
-    double arcAngle = 2 * pi * (percentage / 100);
+    double arcAngle = 2 * Math.pi * (percentage / 100);
 
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
-      -pi / 2,
+      -Math.pi / 2,
       arcAngle,
       false,
       paintArc,
