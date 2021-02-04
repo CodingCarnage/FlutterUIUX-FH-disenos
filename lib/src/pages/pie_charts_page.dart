@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:disenos/src/widgets/radial_progress.dart';
+
 class PieChartsPage extends StatefulWidget {
   const PieChartsPage({Key key}) : super(key: key);
 
@@ -14,9 +16,15 @@ class _PieChartsPageState extends State<PieChartsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          '$percentage%',
-          style: Theme.of(context).textTheme.headline5,
+        child: Container(
+          width: 300.0,
+          height: 300.0,
+          color: Colors.redAccent,
+          child: Center(
+            child: RadialProgress(
+              percentage: 40.0,
+            ),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
