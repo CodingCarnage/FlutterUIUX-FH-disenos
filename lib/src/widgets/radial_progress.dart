@@ -6,9 +6,17 @@ class RadialProgress extends StatefulWidget {
   RadialProgress({
     Key key,
     @required this.percentage,
+    this.color = Colors.blueAccent,
+    this.backgroundColor = Colors.grey,
+    this.lineWidth = 10.0,
+    this.backgroundLineWidth = 4.0,
   }) : super(key: key);
 
   final double percentage;
+  final Color color;
+  final Color backgroundColor;
+  final double lineWidth;
+  final double backgroundLineWidth;
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
@@ -55,6 +63,10 @@ class _RadialProgressState extends State<RadialProgress>
             painter: _RadialProgressPainter(
               percentage: (widget.percentage - percentageDifference) +
                   (percentageDifference * animationController.value),
+              color: widget.color,
+              backgroundColor: widget.backgroundColor,
+              lineWidth: widget.lineWidth,
+              backgroundLineWidth: widget.backgroundLineWidth,
             ),
           ),
         );
@@ -65,35 +77,43 @@ class _RadialProgressState extends State<RadialProgress>
 
 class _RadialProgressPainter extends CustomPainter {
   _RadialProgressPainter({
-    this.percentage,
+    @required this.percentage,
+    @required this.color,
+    @required this.backgroundColor,
+    @required this.lineWidth,
+    @required this.backgroundLineWidth,
   });
 
-  final percentage;
+  final double percentage;
+  final Color color;
+  final Color backgroundColor;
+  final double lineWidth;
+  final double backgroundLineWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
     //* Complete circle.
     final Paint paint = new Paint()
-      ..strokeWidth = 4
-      ..color = Colors.grey
+      ..strokeWidth = backgroundLineWidth
+      ..color = backgroundColor
       ..style = PaintingStyle.stroke;
-    final Offset center = new Offset(size.width / 2, size.height / 2);
-    final double radius = Math.min(size.width / 2, size.height / 2);
+    final Offset center = new Offset(size.width / 2.0, size.height / 2.0);
+    final double radius = Math.min(size.width / 2.0, size.height / 2.0);
 
     canvas.drawCircle(center, radius, paint);
 
     //* Arch
     final Paint paintArc = new Paint()
-      ..strokeWidth = 10
-      ..color = Colors.pinkAccent
+      ..strokeWidth = lineWidth
+      ..color = color
       ..style = PaintingStyle.stroke;
 
     //* Parts to fill.
-    double arcAngle = 2 * Math.pi * (percentage / 100);
+    double arcAngle = 2.0 * Math.pi * (percentage / 100.0);
 
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
-      -Math.pi / 2,
+      -Math.pi / 2.0,
       arcAngle,
       false,
       paintArc,

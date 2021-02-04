@@ -17,11 +17,14 @@ class _PieChartsPageState extends State<PieChartsPage> {
     return Scaffold(
       body: Center(
         child: Container(
-          width: 300.0,
-          height: 300.0,
+          width: 200.0,
+          height: 200.0,
           child: Center(
             child: RadialProgress(
               percentage: percentage,
+              color: Colors.redAccent,
+              lineWidth: 40.0,
+              backgroundLineWidth: 40.0,
             ),
           ),
         ),
