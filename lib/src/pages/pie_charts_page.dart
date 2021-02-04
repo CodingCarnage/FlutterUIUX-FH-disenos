@@ -19,10 +19,9 @@ class _PieChartsPageState extends State<PieChartsPage> {
         child: Container(
           width: 300.0,
           height: 300.0,
-          color: Colors.redAccent,
           child: Center(
             child: RadialProgress(
-              percentage: 40.0,
+              percentage: percentage,
             ),
           ),
         ),
