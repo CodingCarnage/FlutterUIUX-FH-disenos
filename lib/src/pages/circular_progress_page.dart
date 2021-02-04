@@ -1,4 +1,5 @@
 import 'dart:math' as Math;
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,32 @@ class CircularProgressPage extends StatefulWidget {
   _CircularProgressPageState createState() => _CircularProgressPageState();
 }
 
-class _CircularProgressPageState extends State<CircularProgressPage> {
-  double percentage = 10;
+class _CircularProgressPageState extends State<CircularProgressPage> with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+  
+  double percentage = 0.0;
+  double newPercentage = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = new AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+    );
+    animationController.addListener(() { 
+      // print('AnimationController: ${animationController.value}');
+      setState(() {
+        percentage = lerpDouble(percentage, newPercentage, animationController.value);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +45,6 @@ class _CircularProgressPageState extends State<CircularProgressPage> {
           padding: const EdgeInsets.all(5.0),
           width: 300.0,
           height: 300.0,
-          // color: Colors.deepPurpleAccent,
           child: CustomPaint(
             painter: _RadialProgressPainter(percentage: percentage),
           ),
@@ -29,10 +53,13 @@ class _CircularProgressPageState extends State<CircularProgressPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            percentage += 10;
-            if (percentage == 100) {
+            percentage = newPercentage;
+            newPercentage += 10;
+            if (newPercentage > 100) {
+              newPercentage = 0;
               percentage = 0;
             }
+            animationController.forward(from: 0.0);
           });
         },
         child: Icon(Icons.add),
