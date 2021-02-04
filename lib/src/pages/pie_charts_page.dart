@@ -15,19 +15,37 @@ class _PieChartsPageState extends State<PieChartsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: 200.0,
-          height: 200.0,
-          child: Center(
-            child: RadialProgress(
-              percentage: percentage,
-              color: Colors.redAccent,
-              lineWidth: 40.0,
-              backgroundLineWidth: 40.0,
-            ),
+      // backgroundColor: Color.fromARGB(255, 39, 40, 34),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              CustomRadialProgress(
+                percentage: percentage,
+                color: Colors.redAccent,
+              ),
+              CustomRadialProgress(
+                percentage: percentage,
+                color: Colors.blueAccent,
+              ),
+            ],
           ),
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              CustomRadialProgress(
+                percentage: percentage,
+                color: Colors.deepOrangeAccent,
+              ),
+              CustomRadialProgress(
+                percentage: percentage,
+                color: Colors.indigoAccent,
+              ),
+            ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -39,6 +57,36 @@ class _PieChartsPageState extends State<PieChartsPage> {
             }
           });
         },
+      ),
+    );
+  }
+}
+
+class CustomRadialProgress extends StatelessWidget {
+  const CustomRadialProgress({
+    Key key,
+    @required this.percentage,
+    this.color = Colors.blueAccent,
+  }) : super(key: key);
+
+  final double percentage;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150.0,
+      height: 150.0,
+      child: Center(
+        child: RadialProgress(
+          percentage: percentage,
+          color: color,
+          backgroundColor: Colors.white,
+          fill: true,
+          lineWidth: 15.0,
+          backgroundLineWidth: 15.0,
+          showTextPercentage: true,
+        ),
       ),
     );
   }

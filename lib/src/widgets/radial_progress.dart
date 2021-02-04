@@ -10,6 +10,8 @@ class RadialProgress extends StatefulWidget {
     this.backgroundColor = Colors.grey,
     this.lineWidth = 10.0,
     this.backgroundLineWidth = 4.0,
+    this.fill = false,
+    this.showTextPercentage = false,
   }) : super(key: key);
 
   final double percentage;
@@ -17,6 +19,8 @@ class RadialProgress extends StatefulWidget {
   final Color backgroundColor;
   final double lineWidth;
   final double backgroundLineWidth;
+  final bool fill;
+  final bool showTextPercentage;
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
@@ -52,26 +56,123 @@ class _RadialProgressState extends State<RadialProgress>
     final double percentageDifference = widget.percentage - oldPercentage;
     oldPercentage = widget.percentage;
 
-    return AnimatedBuilder(
-      animation: animationController,
-      builder: (BuildContext context, Widget child) {
-        return Container(
-          padding: const EdgeInsets.all(10.0),
-          width: double.infinity,
-          height: double.infinity,
-          child: CustomPaint(
-            painter: _RadialProgressPainter(
-              percentage: (widget.percentage - percentageDifference) +
-                  (percentageDifference * animationController.value),
-              color: widget.color,
-              backgroundColor: widget.backgroundColor,
-              lineWidth: widget.lineWidth,
-              backgroundLineWidth: widget.backgroundLineWidth,
-            ),
+    if (widget.showTextPercentage == true) {
+      return Stack(
+        children: <Widget>[
+          AnimatedBuilder(
+            animation: animationController,
+            builder: (BuildContext context, Widget child) {
+              return Container(
+                padding: const EdgeInsets.all(10.0),
+                width: double.infinity,
+                height: double.infinity,
+                child: CustomPaint(
+                  painter: _RadialProgressPainter(
+                    percentage: (widget.percentage - percentageDifference) +
+                        (percentageDifference * animationController.value),
+                    color: widget.color,
+                    backgroundColor: widget.backgroundColor,
+                    lineWidth: widget.lineWidth,
+                    backgroundLineWidth: widget.backgroundLineWidth,
+                    fill: widget.fill,
+                  ),
+                ),
+              );
+            },
           ),
-        );
-      },
-    );
+          _PercentageText(
+            percentage: widget.percentage,
+            color: widget.color,
+            backgroundColor: widget.backgroundColor,
+            fill: widget.fill,
+          ),
+        ],
+      );
+    } else {
+      return AnimatedBuilder(
+        animation: animationController,
+        builder: (BuildContext context, Widget child) {
+          return Container(
+            padding: const EdgeInsets.all(10.0),
+            width: double.infinity,
+            height: double.infinity,
+            child: CustomPaint(
+              painter: _RadialProgressPainter(
+                percentage: (widget.percentage - percentageDifference) +
+                    (percentageDifference * animationController.value),
+                color: widget.color,
+                backgroundColor: widget.backgroundColor,
+                lineWidth: widget.lineWidth,
+                backgroundLineWidth: widget.backgroundLineWidth,
+                fill: widget.fill,
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+}
+
+class _PercentageText extends StatelessWidget {
+  const _PercentageText({
+    Key key,
+    @required this.percentage,
+    @required this.color,
+    @required this.backgroundColor,
+    @required this.fill,
+  }) : super(key: key);
+
+  final double percentage;
+  final Color color;
+  final Color backgroundColor;
+  final bool fill;
+
+  @override
+  Widget build(BuildContext context) {
+    if (fill == true) {
+      return Container(
+        child: Center(
+          child: Stack(
+            children: [
+              Text(
+                percentage
+                        .toString()
+                        .substring(0, percentage.toString().indexOf(".")) +
+                    '%',
+                style: Theme.of(context).textTheme.headline6.copyWith(
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 6
+                      ..color = backgroundColor),
+              ),
+              Text(
+                percentage
+                        .toString()
+                        .substring(0, percentage.toString().indexOf(".")) +
+                    '%',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: color),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        child: Center(
+          child: Text(
+            percentage
+                    .toString()
+                    .substring(0, percentage.toString().indexOf(".")) +
+                '%',
+            style: Theme.of(context).textTheme.headline6.copyWith(color: color),
+          ),
+        ),
+      );
+    }
   }
 }
 
@@ -82,6 +183,7 @@ class _RadialProgressPainter extends CustomPainter {
     @required this.backgroundColor,
     @required this.lineWidth,
     @required this.backgroundLineWidth,
+    @required this.fill,
   });
 
   final double percentage;
@@ -89,6 +191,7 @@ class _RadialProgressPainter extends CustomPainter {
   final Color backgroundColor;
   final double lineWidth;
   final double backgroundLineWidth;
+  final bool fill;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -96,7 +199,7 @@ class _RadialProgressPainter extends CustomPainter {
     final Paint paint = new Paint()
       ..strokeWidth = backgroundLineWidth
       ..color = backgroundColor
-      ..style = PaintingStyle.stroke;
+      ..style = fill == true ? PaintingStyle.fill : PaintingStyle.stroke;
     final Offset center = new Offset(size.width / 2.0, size.height / 2.0);
     final double radius = Math.min(size.width / 2.0, size.height / 2.0);
 
@@ -106,16 +209,16 @@ class _RadialProgressPainter extends CustomPainter {
     final Paint paintArc = new Paint()
       ..strokeWidth = lineWidth
       ..color = color
-      ..style = PaintingStyle.stroke;
+      ..style = fill == true ? PaintingStyle.fill : PaintingStyle.stroke;
 
     //* Parts to fill.
     double arcAngle = 2.0 * Math.pi * (percentage / 100.0);
 
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
-      -Math.pi / 2.0,
+      -Math.pi / 2,
       arcAngle,
-      false,
+      fill == true ? true : false,
       paintArc,
     );
   }
