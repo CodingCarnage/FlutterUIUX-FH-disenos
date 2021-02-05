@@ -208,7 +208,7 @@ class _RadialProgressPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    //* Complete circle.
+    //* Background circle.
     final Paint paint = new Paint()
       ..strokeWidth = backgroundLineWidth
       ..color = backgroundColor
@@ -216,12 +216,31 @@ class _RadialProgressPainter extends CustomPainter {
     final Offset center = new Offset(size.width / 2.0, size.height / 2.0);
     final double radius = Math.min(size.width / 2.0, size.height / 2.0);
 
+    //* Draw background circle.
     canvas.drawCircle(center, radius, paint);
 
-    //* Arch
+    //* Arch.
     final Paint paintArc = new Paint()
       ..strokeWidth = lineWidth
       ..color = color
+      ..strokeCap = StrokeCap.round //! TODO: Agregar esto a los parametros.
+      ..style = fill == true ? PaintingStyle.fill : PaintingStyle.stroke;
+
+    final Rect rect = new Rect.fromCircle(
+      center: Offset(0,0),
+      radius: 180,
+    );
+
+    final Gradient gradient = new LinearGradient(colors: <Color>[
+      Color(0xffC012FF),
+      Color(0xff6D05E8),
+      Colors.red,
+    ]);
+
+    //* Arch with Gradient
+    final Paint paintArcGradient = new Paint()
+      ..strokeWidth = lineWidth
+      ..shader = gradient.createShader(rect)
       ..strokeCap = StrokeCap.round //! TODO: Agregar esto a los parametros.
       ..style = fill == true ? PaintingStyle.fill : PaintingStyle.stroke;
 
@@ -233,7 +252,7 @@ class _RadialProgressPainter extends CustomPainter {
       -Math.pi / 2,
       arcAngle,
       fill == true ? true : false,
-      paintArc,
+      paintArcGradient,
     );
   }
 
