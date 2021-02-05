@@ -88,6 +88,12 @@ class CustomRadialProgress extends StatelessWidget {
           showTextPercentage: true,
           textPercentageColor: Colors.black,
           textPercentageOutlineColor: Colors.white,
+          changeToGradient: true,
+          strokeCap: StrokeCap.round,
+          gradientColors: [
+            Colors.deepPurple[200],
+            Colors.deepPurpleAccent[700]
+          ],
         ),
       ),
     );
