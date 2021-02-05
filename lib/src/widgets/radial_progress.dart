@@ -222,6 +222,7 @@ class _RadialProgressPainter extends CustomPainter {
     final Paint paintArc = new Paint()
       ..strokeWidth = lineWidth
       ..color = color
+      ..strokeCap = StrokeCap.round //! TODO: Agregar esto a los parametros.
       ..style = fill == true ? PaintingStyle.fill : PaintingStyle.stroke;
 
     //* Parts to fill.
