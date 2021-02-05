@@ -12,6 +12,8 @@ class RadialProgress extends StatefulWidget {
     this.backgroundLineWidth = 4.0,
     this.fill = false,
     this.showTextPercentage = false,
+    this.textPercentageColor = Colors.black,
+    this.textPercentageOutlineColor = Colors.transparent,
   }) : super(key: key);
 
   final double percentage;
@@ -21,6 +23,8 @@ class RadialProgress extends StatefulWidget {
   final double backgroundLineWidth;
   final bool fill;
   final bool showTextPercentage;
+  final Color textPercentageColor;
+  final Color textPercentageOutlineColor;
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
@@ -85,6 +89,8 @@ class _RadialProgressState extends State<RadialProgress>
             color: widget.color,
             backgroundColor: widget.backgroundColor,
             fill: widget.fill,
+            textPercentageColor: widget.textPercentageColor,
+            textPercentageOutlineColor: widget.textPercentageOutlineColor,
           ),
         ],
       );
@@ -121,12 +127,16 @@ class _PercentageText extends StatelessWidget {
     @required this.color,
     @required this.backgroundColor,
     @required this.fill,
+    @required this.textPercentageColor,
+    @required this.textPercentageOutlineColor,
   }) : super(key: key);
 
   final double percentage;
   final Color color;
   final Color backgroundColor;
   final bool fill;
+  final Color textPercentageColor;
+  final Color textPercentageOutlineColor;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +154,7 @@ class _PercentageText extends StatelessWidget {
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
                       ..strokeWidth = 6
-                      ..color = backgroundColor),
+                      ..color = textPercentageOutlineColor),
               ),
               Text(
                 percentage
@@ -154,7 +164,7 @@ class _PercentageText extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headline6
-                    .copyWith(color: color),
+                    .copyWith(color: textPercentageColor),
               ),
             ],
           ),
@@ -168,7 +178,10 @@ class _PercentageText extends StatelessWidget {
                     .toString()
                     .substring(0, percentage.toString().indexOf(".")) +
                 '%',
-            style: Theme.of(context).textTheme.headline6.copyWith(color: color),
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                .copyWith(color: textPercentageColor),
           ),
         ),
       );

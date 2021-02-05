@@ -15,7 +15,7 @@ class _PieChartsPageState extends State<PieChartsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 39, 40, 34),
+      backgroundColor: Color.fromARGB(255, 39, 40, 34),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -86,6 +86,8 @@ class CustomRadialProgress extends StatelessWidget {
           lineWidth: 15.0,
           backgroundLineWidth: 15.0,
           showTextPercentage: true,
+          textPercentageColor: Colors.black,
+          textPercentageOutlineColor: Colors.white,
         ),
       ),
     );
