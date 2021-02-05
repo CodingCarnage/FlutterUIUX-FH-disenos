@@ -3,6 +3,11 @@ import 'dart:math' as Math;
 import 'package:flutter/material.dart';
 
 class RadialProgress extends StatefulWidget {
+  static const List<Color> defaultColorList = <Color>[
+    Colors.red,
+    Colors.green,
+  ];
+
   RadialProgress({
     Key key,
     @required this.percentage,
@@ -14,6 +19,9 @@ class RadialProgress extends StatefulWidget {
     this.showTextPercentage = false,
     this.textPercentageColor = Colors.black,
     this.textPercentageOutlineColor = Colors.transparent,
+    this.strokeCap = StrokeCap.round,
+    this.changeToGradient = false,
+    this.gradientColors = defaultColorList,
   }) : super(key: key);
 
   final double percentage;
@@ -25,6 +33,9 @@ class RadialProgress extends StatefulWidget {
   final bool showTextPercentage;
   final Color textPercentageColor;
   final Color textPercentageOutlineColor;
+  final StrokeCap strokeCap;
+  final bool changeToGradient;
+  final List<Color> gradientColors;
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
@@ -79,6 +90,9 @@ class _RadialProgressState extends State<RadialProgress>
                     lineWidth: widget.lineWidth,
                     backgroundLineWidth: widget.backgroundLineWidth,
                     fill: widget.fill,
+                    strokeCap: widget.strokeCap,
+                    changeToGradient: widget.changeToGradient,
+                    gradientColors: widget.gradientColors,
                   ),
                 ),
               );
@@ -111,6 +125,9 @@ class _RadialProgressState extends State<RadialProgress>
                 lineWidth: widget.lineWidth,
                 backgroundLineWidth: widget.backgroundLineWidth,
                 fill: widget.fill,
+                strokeCap: widget.strokeCap,
+                changeToGradient: widget.changeToGradient,
+                gradientColors: widget.gradientColors,
               ),
             ),
           );
@@ -197,6 +214,9 @@ class _RadialProgressPainter extends CustomPainter {
     @required this.lineWidth,
     @required this.backgroundLineWidth,
     @required this.fill,
+    @required this.strokeCap,
+    @required this.changeToGradient,
+    @required this.gradientColors,
   });
 
   final double percentage;
@@ -205,6 +225,9 @@ class _RadialProgressPainter extends CustomPainter {
   final double lineWidth;
   final double backgroundLineWidth;
   final bool fill;
+  final StrokeCap strokeCap;
+  final bool changeToGradient;
+  final List<Color> gradientColors;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -223,25 +246,23 @@ class _RadialProgressPainter extends CustomPainter {
     final Paint paintArc = new Paint()
       ..strokeWidth = lineWidth
       ..color = color
-      ..strokeCap = StrokeCap.round //! TODO: Agregar esto a los parametros.
+      ..strokeCap = strokeCap
       ..style = fill == true ? PaintingStyle.fill : PaintingStyle.stroke;
 
+    //* Rect for gradient.
     final Rect rect = new Rect.fromCircle(
-      center: Offset(0,0),
+      center: Offset(0, 0),
       radius: 180,
     );
 
-    final Gradient gradient = new LinearGradient(colors: <Color>[
-      Color(0xffC012FF),
-      Color(0xff6D05E8),
-      Colors.red,
-    ]);
+    //* Gradient.
+    final Gradient gradient = new LinearGradient(colors: gradientColors);
 
     //* Arch with Gradient
     final Paint paintArcGradient = new Paint()
       ..strokeWidth = lineWidth
       ..shader = gradient.createShader(rect)
-      ..strokeCap = StrokeCap.round //! TODO: Agregar esto a los parametros.
+      ..strokeCap = strokeCap
       ..style = fill == true ? PaintingStyle.fill : PaintingStyle.stroke;
 
     //* Parts to fill.
@@ -252,7 +273,7 @@ class _RadialProgressPainter extends CustomPainter {
       -Math.pi / 2,
       arcAngle,
       fill == true ? true : false,
-      paintArcGradient,
+      changeToGradient == true ? paintArcGradient : paintArc,
     );
   }
 
