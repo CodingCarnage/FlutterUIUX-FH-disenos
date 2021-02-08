@@ -21,8 +21,7 @@ class RectangleAnimated extends StatefulWidget {
   _RectangleAnimatedState createState() => _RectangleAnimatedState();
 }
 
-class _RectangleAnimatedState extends State<RectangleAnimated>
-    with SingleTickerProviderStateMixin {
+class _RectangleAnimatedState extends State<RectangleAnimated> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> rotation;
   Animation<double> opacity;
@@ -58,7 +57,7 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
         curve: Curves.easeOut,
       ),
     ));
-    
+
     opacityOut = Tween(
       begin: 0.0,
       end: 1.0,
@@ -75,7 +74,7 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
       begin: 0.0,
       end: 200.0,
     ).animate(animationController);
-    
+
     size = Tween(
       begin: 0.0,
       end: 2.0,
@@ -85,7 +84,7 @@ class _RectangleAnimatedState extends State<RectangleAnimated>
       // print('Stauts: ${animationController.status}');
       if (animationController.isCompleted) {
         animationController.reset();
-      }// else if (animationController.isDismissed) {
+      } // else if (animationController.isDismissed) {
       //   animationController.forward();
       // }
     });
