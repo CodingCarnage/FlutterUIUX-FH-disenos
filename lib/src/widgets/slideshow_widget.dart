@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:disenos/src/models/slider_model.dart';
 
 class Slideshow extends StatelessWidget {
-  const Slideshow({Key key}) : super(key: key);
+  const Slideshow({
+    Key key,
+    @required this.slides,
+  }) : super(key: key);
+
+  final List<Widget> slides;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class Slideshow extends StatelessWidget {
       child: Center(
         child: Column(
           children: <Widget>[
-            Expanded(child: _Slides()),
+            Expanded(child: _Slides(slides: this.slides)),
             _Dots(),
           ],
         ),
@@ -25,7 +29,12 @@ class Slideshow extends StatelessWidget {
 }
 
 class _Slides extends StatefulWidget {
-  const _Slides({Key key}) : super(key: key);
+  const _Slides({
+    Key key,
+    @required this.slides,
+  }) : super(key: key);
+
+  final List<Widget> slides;
 
   @override
   __SlidesState createState() => __SlidesState();
@@ -52,14 +61,11 @@ class __SlidesState extends State<_Slides> {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: PageView(
         controller: pageController,
-        children: <Widget>[
-          _Slide(svg: 'assets/svgs/Slide-1.svg'),
-          _Slide(svg: 'assets/svgs/Slide-4.svg'),
-          _Slide(svg: 'assets/svgs/Slide-3.svg'),
-        ],
+        children: widget.slides.map((slide) => _Slide(slide: slide)).toList(),
       ),
     );
   }
@@ -68,10 +74,10 @@ class __SlidesState extends State<_Slides> {
 class _Slide extends StatelessWidget {
   const _Slide({
     Key key,
-    @required this.svg,
+    @required this.slide,
   }) : super(key: key);
 
-  final String svg;
+  final Widget slide;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +85,7 @@ class _Slide extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       padding: const EdgeInsets.all(30.0),
-      child: SvgPicture.asset(svg),
+      child: slide,
     );
   }
 }
@@ -139,4 +145,3 @@ class _Dot extends StatelessWidget {
     );
   }
 }
-
