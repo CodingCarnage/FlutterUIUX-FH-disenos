@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:disenos/src/widgets/radial_progress.dart';
+import 'package:disenos/src/widgets/radial_progress_widget.dart';
 
 class PieChartsPage extends StatefulWidget {
   const PieChartsPage({Key key}) : super(key: key);
