@@ -20,7 +20,7 @@ class Slideshow extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(child: _Slides(slides: this.slides)),
-            _Dots(),
+            _Dots(this.slides.length),
           ],
         ),
       ),
@@ -61,7 +61,6 @@ class __SlidesState extends State<_Slides> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: PageView(
         controller: pageController,
@@ -91,7 +90,9 @@ class _Slide extends StatelessWidget {
 }
 
 class _Dots extends StatelessWidget {
-  const _Dots({Key key}) : super(key: key);
+  const _Dots(this.totalSlides, {Key key}) : super(key: key);
+
+  final int totalSlides;
 
   @override
   Widget build(BuildContext context) {
@@ -101,20 +102,7 @@ class _Dots extends StatelessWidget {
       height: screenSize.height * 0.05,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _Dot(
-            screenSize: screenSize,
-            index: 0,
-          ),
-          _Dot(
-            screenSize: screenSize,
-            index: 1,
-          ),
-          _Dot(
-            screenSize: screenSize,
-            index: 2,
-          ),
-        ],
+        children: List.generate(totalSlides, (index) => _Dot(index: index)),
       ),
     );
   }
@@ -123,15 +111,14 @@ class _Dots extends StatelessWidget {
 class _Dot extends StatelessWidget {
   const _Dot({
     Key key,
-    @required this.screenSize,
     @required this.index,
   }) : super(key: key);
 
-  final Size screenSize;
   final int index;
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     final pageViewIndex = Provider.of<SliderModel>(context).currentPage;
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
