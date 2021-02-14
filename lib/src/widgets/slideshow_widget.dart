@@ -8,20 +8,39 @@ class Slideshow extends StatelessWidget {
   const Slideshow({
     Key key,
     @required this.slides,
+    this.dotsOnTop = false,
+    this.primaryColor = Colors.blue,
+    this.secondaryColor = Colors.grey,
   }) : super(key: key);
 
   final List<Widget> slides;
+  final bool dotsOnTop;
+  final Color primaryColor;
+  final Color secondaryColor;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => new SliderModel(),
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Expanded(child: _Slides(slides: this.slides)),
-            _Dots(this.slides.length),
-          ],
+      child: SafeArea(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              if (this.dotsOnTop)
+                _Dots(
+                  this.slides.length,
+                  primaryColor: this.primaryColor,
+                  secondaryColor: this.secondaryColor,
+                ),
+              Expanded(child: _Slides(slides: this.slides)),
+              if (!this.dotsOnTop)
+                _Dots(
+                  this.slides.length,
+                  primaryColor: this.primaryColor,
+                  secondaryColor: this.secondaryColor,
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -90,9 +109,16 @@ class _Slide extends StatelessWidget {
 }
 
 class _Dots extends StatelessWidget {
-  const _Dots(this.totalSlides, {Key key}) : super(key: key);
+  const _Dots(
+    this.totalSlides, {
+    Key key,
+    @required this.primaryColor,
+    @required this.secondaryColor,
+  }) : super(key: key);
 
   final int totalSlides;
+  final Color primaryColor;
+  final Color secondaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +128,13 @@ class _Dots extends StatelessWidget {
       height: screenSize.height * 0.05,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(totalSlides, (index) => _Dot(index: index)),
+        children: List.generate(
+            totalSlides,
+            (index) => _Dot(
+                  index: index,
+                  primaryColor: primaryColor,
+                  secondaryColor: secondaryColor,
+                )),
       ),
     );
   }
@@ -112,9 +144,13 @@ class _Dot extends StatelessWidget {
   const _Dot({
     Key key,
     @required this.index,
+    @required this.primaryColor,
+    @required this.secondaryColor,
   }) : super(key: key);
 
   final int index;
+  final Color primaryColor;
+  final Color secondaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +162,7 @@ class _Dot extends StatelessWidget {
       width: screenSize.height * 0.015,
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       decoration: BoxDecoration(
-        color: (pageViewIndex.round() == index) ? Colors.orange : Colors.grey,
+        color: (pageViewIndex.round() == index) ? this.primaryColor : this.secondaryColor,
         shape: BoxShape.circle,
       ),
     );
