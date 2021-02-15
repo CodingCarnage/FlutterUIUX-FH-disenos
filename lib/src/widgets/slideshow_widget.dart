@@ -9,12 +9,16 @@ class Slideshow extends StatelessWidget {
     this.dotsOnTop = false,
     this.primaryColor = Colors.blue,
     this.secondaryColor = Colors.grey,
+    this.primaryBulletSize = 12,
+    this.secondaryBulletSize = 12,
   }) : super(key: key);
 
   final List<Widget> slides;
   final bool dotsOnTop;
   final Color primaryColor;
   final Color secondaryColor;
+  final double primaryBulletSize;
+  final double secondaryBulletSize;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,9 @@ class Slideshow extends StatelessWidget {
           child: Builder(
             builder: (BuildContext context) {
               Provider.of<_SlideshowModel>(context).primaryColor = this.primaryColor;
-              Provider.of<_SlideshowModel>(context).secondaryColor = this.secondaryColor; 
+              Provider.of<_SlideshowModel>(context).secondaryColor = this.secondaryColor;
+              Provider.of<_SlideshowModel>(context).primaryBulletSize = this.primaryBulletSize;
+              Provider.of<_SlideshowModel>(context).secondaryBulletSize = this.secondaryBulletSize;
               return _CreateColumnSlideshow(dotsOnTop: dotsOnTop, slides: slides);
             },
           ),
@@ -130,7 +136,7 @@ class _Dots extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      height: screenSize.height * 0.05,
+      height: screenSize.height * 0.075,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(totalSlides, (index) => _Dot(index: index)),
@@ -149,16 +155,24 @@ class _Dot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
     final slideshowModel = Provider.of<_SlideshowModel>(context);
+    double bulletSize;
+    Color bulletColor;
+    if (slideshowModel.currentPage.round() == index) {
+      bulletSize = slideshowModel.primaryBulletSize;
+      bulletColor = slideshowModel.primaryColor;
+    } else {
+      bulletSize = slideshowModel.secondaryBulletSize;
+      bulletColor = slideshowModel.secondaryColor;
+    }
+
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
-      height: screenSize.height * 0.015,
-      width: screenSize.height * 0.015,
+      height: bulletSize,
+      width: bulletSize,
       margin: const EdgeInsets.symmetric(horizontal: 5.0),
       decoration: BoxDecoration(
-        color:
-            (slideshowModel.currentPage.round() == index) ? slideshowModel.primaryColor : slideshowModel.secondaryColor,
+        color: bulletColor,
         shape: BoxShape.circle,
       ),
     );
@@ -189,5 +203,21 @@ class _SlideshowModel with ChangeNotifier {
 
   set secondaryColor(Color secondaryColor) {
     this._secondaryColor = secondaryColor;
+  }
+
+  double _primaryBulletSize = 12.0;
+
+  double get primaryBulletSize => this._primaryBulletSize;
+
+  set primaryBulletSize(double primaryBulletSize) {
+    this._primaryBulletSize = primaryBulletSize;
+  }
+
+  double _secondaryBulletSize = 12.0;
+
+  double get secondaryBulletSize => this._secondaryBulletSize;
+
+  set secondaryBulletSize(double secondaryBulletSize) {
+    this._secondaryBulletSize = secondaryBulletSize;
   }
 }
