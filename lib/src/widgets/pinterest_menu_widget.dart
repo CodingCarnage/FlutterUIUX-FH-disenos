@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 class PinterestButton {
@@ -23,12 +24,10 @@ class PrinterestMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ChangeNotifierProvider(
-        create: (_) => new _MenuModel(),
-        child: _PinterestMenuBackground(
-          child: _MenuItems(items: buttons),
-        ),
+    return ChangeNotifierProvider(
+      create: (_) => new _MenuModel(),
+      child: _PinterestMenuBackground(
+        child: _MenuItems(items: buttons),
       ),
     );
   }
