@@ -10,9 +10,17 @@ class PinterestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        // child: PinterestGrid(),
-        child: PrinterestMenu(),
+      body: Stack(
+        children: <Widget>[
+          PinterestGrid(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: PrinterestMenu(),
+            ),
+          ),
+        ],
       ),
     );
   }
