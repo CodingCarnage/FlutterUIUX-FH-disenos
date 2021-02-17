@@ -15,23 +15,25 @@ class PinterestButton {
 class PrinterestMenu extends StatelessWidget {
   const PrinterestMenu({
     Key key,
+    @required this.buttons,
     this.show = true,
     this.backgroundColor = Colors.white,
     this.activeColor = Colors.red,
     this.inactiveColor = Colors.black,
   }) : super(key: key);
 
+  final List<PinterestButton> buttons;
   final bool show;
   final Color backgroundColor;
   final Color activeColor;
   final Color inactiveColor;
 
-  static final List<PinterestButton> buttons = [
-    PinterestButton(icon: Icons.pie_chart, onPressed: () => print('Icon pie_chart')),
-    PinterestButton(icon: Icons.search, onPressed: () => print('Icon search')),
-    PinterestButton(icon: Icons.notifications, onPressed: () => print('Icon notifications')),
-    PinterestButton(icon: Icons.supervised_user_circle, onPressed: () => print('Icon supervised_user_circle')),
-  ];
+  // static final List<PinterestButton> buttons = [
+  //   PinterestButton(icon: Icons.pie_chart, onPressed: () => print('Icon pie_chart')),
+  //   PinterestButton(icon: Icons.search, onPressed: () => print('Icon search')),
+  //   PinterestButton(icon: Icons.notifications, onPressed: () => print('Icon notifications')),
+  //   PinterestButton(icon: Icons.supervised_user_circle, onPressed: () => print('Icon supervised_user_circle')),
+  // ];
 
   @override
   Widget build(BuildContext context) {
