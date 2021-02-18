@@ -53,7 +53,7 @@ class HeaderDiagonal extends StatelessWidget {
   }
 }
 
-class _HeaderDiagonalPainter extends CustomPainter{
+class _HeaderDiagonalPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint();
@@ -73,12 +73,13 @@ class _HeaderDiagonalPainter extends CustomPainter{
 
     canvas.drawPath(path, paint);
   }
-  
-    @override
-    bool shouldRepaint(covariant CustomPainter oldDelegate) {
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
 }
+
 class HeaderTriangle extends StatelessWidget {
   const HeaderTriangle({Key key}) : super(key: key);
 
@@ -94,7 +95,7 @@ class HeaderTriangle extends StatelessWidget {
   }
 }
 
-class _HeaderTrianglePainter extends CustomPainter{
+class _HeaderTrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint();
@@ -113,9 +114,9 @@ class _HeaderTrianglePainter extends CustomPainter{
 
     canvas.drawPath(path, paint);
   }
-  
-    @override
-    bool shouldRepaint(covariant CustomPainter oldDelegate) {
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
 }
@@ -135,7 +136,7 @@ class HeaderPeak extends StatelessWidget {
   }
 }
 
-class _HeaderPeakPainter extends CustomPainter{
+class _HeaderPeakPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint();
@@ -157,9 +158,9 @@ class _HeaderPeakPainter extends CustomPainter{
 
     canvas.drawPath(path, paint);
   }
-  
-    @override
-    bool shouldRepaint(covariant CustomPainter oldDelegate) {
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
 }
@@ -179,7 +180,7 @@ class HeaderCircular extends StatelessWidget {
   }
 }
 
-class _HeaderCircularPainter extends CustomPainter{
+class _HeaderCircularPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint();
@@ -200,12 +201,13 @@ class _HeaderCircularPainter extends CustomPainter{
 
     canvas.drawPath(path, paint);
   }
-  
-    @override
-    bool shouldRepaint(covariant CustomPainter oldDelegate) {
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
 }
+
 class HeaderWave extends StatelessWidget {
   const HeaderWave({Key key}) : super(key: key);
 
@@ -221,7 +223,7 @@ class HeaderWave extends StatelessWidget {
   }
 }
 
-class _HeaderWavePainter extends CustomPainter{
+class _HeaderWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint();
@@ -240,12 +242,12 @@ class _HeaderWavePainter extends CustomPainter{
     path.quadraticBezierTo(size.width * 0.75, size.height * 0.25, size.width, size.height * 0.30);
     path.lineTo(size.width, 0);
     path.close();
-    
+
     canvas.drawPath(path, paint);
   }
-  
-    @override
-    bool shouldRepaint(covariant CustomPainter oldDelegate) {
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
 }
@@ -265,13 +267,10 @@ class HeaderWaveGradient extends StatelessWidget {
   }
 }
 
-class _HeaderWaveGradientPainter extends CustomPainter{
+class _HeaderWaveGradientPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final Rect rect = new Rect.fromCircle(
-      center: Offset(0.0, 55.0),
-      radius: 180
-    );
+    final Rect rect = new Rect.fromCircle(center: Offset(0.0, 55.0), radius: 180);
 
     final Gradient gradient = new LinearGradient(
       begin: Alignment.topCenter,
@@ -304,12 +303,36 @@ class _HeaderWaveGradientPainter extends CustomPainter{
     path.quadraticBezierTo(size.width * 0.75, size.height * 0.25, size.width, size.height * 0.30);
     path.lineTo(size.width, 0);
     path.close();
-    
+
     canvas.drawPath(path, paint);
   }
-  
-    @override
-    bool shouldRepaint(covariant CustomPainter oldDelegate) {
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+}
+
+class IconHeader extends StatelessWidget {
+  const IconHeader({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    return Container(
+      width: double.infinity,
+      height: screenSize.height * 0.325,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: const <Color>[
+            Color(0xff526BF6),
+            Color(0xff67ACF2),
+          ],
+        ),
+      ),
+    );
   }
 }
