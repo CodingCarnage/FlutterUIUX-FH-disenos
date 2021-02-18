@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class HeaderSquare extends StatelessWidget {
   const HeaderSquare({Key key}) : super(key: key);
 
@@ -319,6 +321,53 @@ class IconHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+
+    return Stack(
+      children: [
+        _IconHeaderBackground(),
+        Positioned(
+          top: -50,
+          left: -55,
+          child: FaIcon(
+            FontAwesomeIcons.plus,
+            size: screenSize.height * 0.2625,
+            color: Colors.white.withOpacity(0.2),
+          ),
+        ),
+        Column(
+          children: <Widget>[
+            const SizedBox(height: 70.0, width: double.infinity),
+            Text(
+              'Haz solicitado',
+              style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white, fontWeight: FontWeight.normal),
+            ),
+            const SizedBox(height: 20.0),
+            Text(
+              'Asistencia Médica',
+              style: Theme.of(context).textTheme.headline5.copyWith(color: Colors.white),
+            ),
+            const SizedBox(height: 20.0),
+            FaIcon(
+              FontAwesomeIcons.plus,
+              size: screenSize.width * 0.125,
+              color: Colors.white,
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class _IconHeaderBackground extends StatelessWidget {
+  const _IconHeaderBackground({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Container(
       width: double.infinity,
       height: screenSize.height * 0.325,
