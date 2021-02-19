@@ -6,7 +6,16 @@ class SliverListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _ListTasks(),
+      body: Stack(
+        children: <Widget>[
+          _MainScroll(),
+          Positioned(
+            child: _ButtonNewList(),
+            bottom: -10,
+            right: -10,
+          )
+        ],
+      ),
     );
   }
 }
@@ -107,6 +116,116 @@ class _ListItem extends StatelessWidget {
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
+      ),
+    );
+  }
+}
+
+class _MainScroll extends StatelessWidget {
+  const _MainScroll({Key key}) : super(key: key);
+
+  static final items = [
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final double screenSize = MediaQuery.of(context).size.height;
+
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverPersistentHeader(
+          floating: true,
+          delegate: _SliverCustomHeaderDelegate(
+            minHeight: screenSize * 0.225,
+            maxHeight: screenSize * 0.2375,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              color: Colors.white,
+              child: _Header(),
+            ),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              ...items,
+              SizedBox(height: 100.0),
+            ],
+          ),
+        ),
+      ],
+      physics: BouncingScrollPhysics(),
+    );
+  }
+}
+
+class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  const _SliverCustomHeaderDelegate({
+    @required this.minHeight,
+    @required this.maxHeight,
+    @required this.child,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(child: child);
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(covariant _SliverCustomHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight || minHeight != oldDelegate.minHeight || child != oldDelegate.child;
+  }
+}
+
+class _ButtonNewList extends StatelessWidget {
+  const _ButtonNewList({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return ButtonTheme(
+      minWidth: size.width * 0.9,
+      height: size.height * 0.125,
+      child: RaisedButton(
+        onPressed: () {},
+        color: Color(0xffED6762),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(50.0))
+        ),
+        child: Text(
+          'CREATE NEW LIST',
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 3,
+            ),
+        ),
       ),
     );
   }
