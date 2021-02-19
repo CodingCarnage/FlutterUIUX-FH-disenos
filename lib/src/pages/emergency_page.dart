@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:animate_do/animate_do.dart';
 
 import 'package:disenos/src/widgets/headers_widget.dart';
 import 'package:disenos/src/widgets/large_button_widget.dart';
@@ -74,11 +75,14 @@ class EmergencyPage extends StatelessWidget {
     ];
 
     final List<Widget> itemMap = items
-        .map((item) => LargeButton(
-              icon: item.icon,
-              text: item.text,
-              onPressed: () => print(item.text),
-              backgroundColors: item.colors,
+        .map((item) => FadeInLeft(
+              duration: Duration(milliseconds: 250),
+              child: LargeButton(
+                icon: item.icon,
+                text: item.text,
+                onPressed: () => print(item.text),
+                backgroundColors: item.colors,
+              ),
             ))
         .toList();
 
