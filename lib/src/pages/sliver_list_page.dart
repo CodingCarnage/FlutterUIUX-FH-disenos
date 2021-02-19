@@ -6,7 +6,7 @@ class SliverListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _Header(),
+      body: _ListTasks(),
     );
   }
 }
@@ -58,19 +58,35 @@ class _ListTasks extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  static final items = [
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 20,
-      itemBuilder: (BuildContext context, int index) => _ListItem(),
+      itemCount: items.length,
+      itemBuilder: (BuildContext context, int index) => items[index],
     );
   }
 }
 
 class _ListItem extends StatelessWidget {
-  const _ListItem({
+  const _ListItem(
+    this.text,
+    this.color, {
     Key key,
   }) : super(key: key);
+
+  final String text;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -80,13 +96,13 @@ class _ListItem extends StatelessWidget {
       height: screenSize * 0.125,
       margin: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.orangeAccent,
+        color: color,
         borderRadius: BorderRadius.circular(30.0),
       ),
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.all(30.0),
       child: Text(
-        'Orange',
+        text,
         style: Theme.of(context).textTheme.headline5.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
