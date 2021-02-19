@@ -12,7 +12,13 @@ class EmergencyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: LargeButton(),
+        child: LargeButton(
+          icon: FontAwesomeIcons.facebook,
+          text: 'Facebook',
+          onPressed: () {
+            print('Click!');
+          },
+        ),
       ),
     );
   }

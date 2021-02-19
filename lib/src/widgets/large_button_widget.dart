@@ -3,14 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LargeButton extends StatelessWidget {
-  const LargeButton({Key key}) : super(key: key);
+  static const List<Color> defaultBackgroundColors = <Color>[
+    Color(0xff54C5F8),
+    Color(0xff01579B),
+  ];
+
+  const LargeButton({
+    Key key,
+    @required this.icon,
+    @required this.text,
+    this.backgroundColors = defaultBackgroundColors,
+    this.onPressed,
+  }) : super(key: key);
+
+  final IconData icon;
+  final String text;
+  final List<Color> backgroundColors;
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        _LargeButtonBackground(),
-        _LargeButtonForeground(),
+        _LargeButtonBackground(
+          icon: this.icon,
+          backgroundColors: this.backgroundColors,
+        ),
+        _LargeButtonForeground(
+          icon: this.icon,
+          text: this.text,
+          onPressed: this.onPressed,
+        ),
       ],
     );
   }
@@ -19,7 +42,14 @@ class LargeButton extends StatelessWidget {
 class _LargeButtonForeground extends StatelessWidget {
   const _LargeButtonForeground({
     Key key,
+    @required this.icon,
+    @required this.text,
+    @required this.onPressed,
   }) : super(key: key);
+
+  final IconData icon;
+  final String text;
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +59,25 @@ class _LargeButtonForeground extends StatelessWidget {
       width: double.infinity,
       height: screenSize.height * 0.1,
       margin: const EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       child: Center(
         child: ListTile(
           leading: FaIcon(
-            FontAwesomeIcons.carCrash,
+            this.icon,
             color: Colors.white,
             size: screenSize.width * 0.1,
           ),
           title: Text(
-            'Car accident',
+            this.text,
             style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
           ),
           trailing: FaIcon(
             FontAwesomeIcons.chevronRight,
             color: Colors.white,
           ),
+          onTap: this.onPressed,
         ),
       ),
     );
@@ -53,12 +87,17 @@ class _LargeButtonForeground extends StatelessWidget {
 class _LargeButtonBackground extends StatelessWidget {
   const _LargeButtonBackground({
     Key key,
+    @required this.icon,
+    @required this.backgroundColors,
   }) : super(key: key);
+
+  final IconData icon;
+  final List<Color> backgroundColors;
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    
+
     return Container(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
@@ -68,7 +107,7 @@ class _LargeButtonBackground extends StatelessWidget {
               right: -20.5,
               top: -20.5,
               child: FaIcon(
-                FontAwesomeIcons.carCrash,
+                this.icon,
                 size: screenSize.width * 0.325,
                 color: Colors.white.withOpacity(0.2),
               ),
@@ -89,10 +128,7 @@ class _LargeButtonBackground extends StatelessWidget {
           )
         ],
         gradient: LinearGradient(
-          colors: <Color>[
-            Color(0xff54C5F8),
-            Color(0xff01579B),
-          ],
+          colors: this.backgroundColors,
         ),
       ),
     );
