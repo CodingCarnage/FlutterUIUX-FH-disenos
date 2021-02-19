@@ -69,7 +69,7 @@ class _LargeButtonForeground extends StatelessWidget {
               leading: FaIcon(
                 this.icon,
                 color: Colors.white,
-                size: screenSize.width * 0.1,
+                size: screenSize.height * 0.05,
               ),
               title: Text(
                 this.text,
@@ -111,7 +111,7 @@ class _LargeButtonBackground extends StatelessWidget {
               top: -20.5,
               child: FaIcon(
                 this.icon,
-                size: screenSize.width * 0.325,
+                size: screenSize.height * 0.1375,
                 color: Colors.white.withOpacity(0.2),
               ),
             ),

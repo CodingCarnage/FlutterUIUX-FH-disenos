@@ -88,11 +88,11 @@ class EmergencyPage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: screenSize.height * 0.25),
+            margin: EdgeInsets.only(top: screenSize.height * 0.20),
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: <Widget>[
-                SizedBox(height: screenSize.height * 0.055),
+                SizedBox(height: screenSize.height * 0.1),
                 ...itemMap,
               ],
             ),
@@ -120,7 +120,7 @@ class _Header extends StatelessWidget {
         ),
         Positioned(
           right: -5,
-          top: 35,
+          top: 40,
           child: RawMaterialButton(
             onPressed: () {},
             shape: CircleBorder(),

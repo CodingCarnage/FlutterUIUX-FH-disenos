@@ -365,7 +365,7 @@ class IconHeader extends StatelessWidget {
             const SizedBox(height: 20.0),
             FaIcon(
               icon,
-              size: screenSize.width * 0.125,
+              size: screenSize.height * 0.075,
               color: Colors.white,
             ),
           ],
