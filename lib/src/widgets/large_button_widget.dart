@@ -13,7 +13,7 @@ class LargeButton extends StatelessWidget {
     @required this.icon,
     @required this.text,
     this.backgroundColors = defaultBackgroundColors,
-    this.onPressed,
+    @required this.onPressed,
   }) : super(key: key);
 
   final IconData icon;
@@ -59,25 +59,28 @@ class _LargeButtonForeground extends StatelessWidget {
       width: double.infinity,
       height: screenSize.height * 0.1,
       margin: const EdgeInsets.all(20.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Center(
-        child: ListTile(
-          leading: FaIcon(
-            this.icon,
-            color: Colors.white,
-            size: screenSize.width * 0.1,
-          ),
-          title: Text(
-            this.text,
-            style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
-          ),
-          trailing: FaIcon(
-            FontAwesomeIcons.chevronRight,
-            color: Colors.white,
-          ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15.0),
           onTap: this.onPressed,
+          child: Center(
+            child: ListTile(
+              leading: FaIcon(
+                this.icon,
+                color: Colors.white,
+                size: screenSize.width * 0.1,
+              ),
+              title: Text(
+                this.text,
+                style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
+              ),
+              trailing: FaIcon(
+                FontAwesomeIcons.chevronRight,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
       ),
     );
