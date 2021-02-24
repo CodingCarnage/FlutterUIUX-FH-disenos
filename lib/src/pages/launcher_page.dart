@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:disenos/src/routes/routes.dart';
+
 class LauncherPage extends StatelessWidget {
   const LauncherPage({Key key}) : super(key: key);
 
@@ -27,18 +29,25 @@ class _OptionsList extends StatelessWidget {
       separatorBuilder: (BuildContext context, int index) => Divider(
         color: Colors.blue,
       ),
-      itemCount: 20,
+      itemCount: pageRoutes.length,
       itemBuilder: (context, index) => ListTile(
         leading: FaIcon(
-          FontAwesomeIcons.slideshare,
+          pageRoutes[index].icon,
           color: Colors.blue,
         ),
-        title: Text('Hola Mundo'),
+        title: Text(pageRoutes[index].title),
         trailing: Icon(
           Icons.chevron_right,
           color: Colors.blue,
         ),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => pageRoutes[index].page,
+            ),
+          );
+        },
       ),
     );
   }
@@ -62,7 +71,9 @@ class _MainMenu extends StatelessWidget {
                   backgroundColor: Colors.blue,
                   child: Text(
                     'CG',
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.headline2.copyWith(
+                      color: Colors.white
+                    ),
                   ),
                 ),
               ),
