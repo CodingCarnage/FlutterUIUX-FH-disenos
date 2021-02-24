@@ -1,4 +1,6 @@
+import 'package:disenos/src/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SliverListPage extends StatelessWidget {
   const SliverListPage({Key key}) : super(key: key);
@@ -146,6 +148,7 @@ class _MainScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenSize = MediaQuery.of(context).size.height;
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
 
     return CustomScrollView(
       slivers: <Widget>[
@@ -156,7 +159,7 @@ class _MainScroll extends StatelessWidget {
             maxHeight: screenSize * 0.2375,
             child: Container(
               alignment: Alignment.centerLeft,
-              color: ThemeData.light().scaffoldBackgroundColor, //! Change
+              color: appTheme.scaffoldBackgroundColor,
               child: _Header(),
             ),
           ),

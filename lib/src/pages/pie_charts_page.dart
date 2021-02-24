@@ -1,6 +1,8 @@
+import 'package:disenos/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:disenos/src/widgets/radial_progress_widget.dart';
+import 'package:provider/provider.dart';
 
 class PieChartsPage extends StatefulWidget {
   const PieChartsPage({Key key}) : super(key: key);
@@ -14,6 +16,7 @@ class _PieChartsPageState extends State<PieChartsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +50,8 @@ class _PieChartsPageState extends State<PieChartsPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: appTheme.textTheme.bodyText2.color,),
+        backgroundColor: appTheme.accentColor,
         onPressed: () {
           setState(() {
             percentage += 10;
@@ -73,6 +77,7 @@ class CustomRadialProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
     return Container(
       width: 150.0,
       height: 150.0,
@@ -80,14 +85,14 @@ class CustomRadialProgress extends StatelessWidget {
         child: RadialProgress(
           percentage: percentage,
           color: color,
-          backgroundColor: Colors.white,
-          fill: true,
-          lineWidth: 15.0,
-          backgroundLineWidth: 15.0,
+          backgroundColor: appTheme.textTheme.bodyText1.color,
+          fill: false,
+          lineWidth: 10.0,
+          backgroundLineWidth: 10.0,
           showTextPercentage: true,
-          textPercentageColor: Colors.black,
+          textPercentageColor: appTheme.textTheme.bodyText1.color,
           textPercentageOutlineColor: Colors.white,
-          changeToGradient: true,
+          changeToGradient: false,
           strokeCap: StrokeCap.round,
           gradientColors: [
             Colors.deepPurple[200],

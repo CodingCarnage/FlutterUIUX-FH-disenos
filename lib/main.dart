@@ -8,7 +8,7 @@ import 'package:disenos/src/theme/theme.dart';
 
 void main() => runApp(
       ChangeNotifierProvider(
-        create: (_) => ThemeChanger(1),
+        create: (_) => ThemeChanger(2),
         child: MyApp(),
       ),
     );

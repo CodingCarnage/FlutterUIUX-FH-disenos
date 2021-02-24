@@ -1,3 +1,4 @@
+import 'package:disenos/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -33,13 +34,16 @@ class _PinterestMenuLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool showMenu = Provider.of<_MenuModel>(context).showMenu;
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: PrinterestMenu(
           show: showMenu,
-          activeColor: Colors.orange,
+          backgroundColor: appTheme.scaffoldBackgroundColor,
+          activeColor: appTheme.accentColor,
+          inactiveColor: appTheme == ThemeData.dark() ? Colors.white60 : Colors.grey,
           buttons: [
             PinterestButton(icon: Icons.pie_chart, onPressed: () => print('Icon pie_chart')),
             PinterestButton(icon: Icons.search, onPressed: () => print('Icon search')),
@@ -107,10 +111,11 @@ class PinterestItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
     return Container(
       margin: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: appTheme.accentColor,
         borderRadius: BorderRadius.circular(30.0),
       ),
       child: Center(

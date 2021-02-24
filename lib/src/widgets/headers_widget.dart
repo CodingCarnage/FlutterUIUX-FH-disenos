@@ -211,7 +211,12 @@ class _HeaderCircularPainter extends CustomPainter {
 }
 
 class HeaderWave extends StatelessWidget {
-  const HeaderWave({Key key}) : super(key: key);
+  const HeaderWave({
+    Key key,
+    this.color = Colors.blue,
+  }) : super(key: key);
+
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -219,19 +224,25 @@ class HeaderWave extends StatelessWidget {
       height: double.infinity,
       width: double.infinity,
       child: CustomPaint(
-        painter: _HeaderWavePainter(),
+        painter: _HeaderWavePainter(color: this.color),
       ),
     );
   }
 }
 
 class _HeaderWavePainter extends CustomPainter {
+  const _HeaderWavePainter({
+    @required this.color,
+  });
+
+  final Color color;
+
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint();
 
     // Paint Properties
-    paint.color = Color(0xff615AAB);
+    paint.color = this.color;//Color(0xff615AAB);
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 10.0;
 
