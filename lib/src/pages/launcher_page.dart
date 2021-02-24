@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'package:disenos/src/routes/routes.dart';
+
+import 'package:disenos/src/theme/theme.dart';
 
 class LauncherPage extends StatelessWidget {
   const LauncherPage({Key key}) : super(key: key);
@@ -58,6 +61,7 @@ class _MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context);
     return Drawer(
       child: SafeArea(
         child: Container(
@@ -71,9 +75,7 @@ class _MainMenu extends StatelessWidget {
                   backgroundColor: Colors.blue,
                   child: Text(
                     'CG',
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                      color: Colors.white
-                    ),
+                    style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.white),
                   ),
                 ),
               ),
@@ -87,9 +89,9 @@ class _MainMenu extends StatelessWidget {
                 ),
                 title: Text('Dark Mode'),
                 trailing: Switch.adaptive(
-                  value: true,
+                  value: appTheme.darkTheme,
                   activeColor: Colors.blue,
-                  onChanged: (value) {},
+                  onChanged: (value) => appTheme.darkTheme = value,
                 ),
               ),
               ListTile(
@@ -99,9 +101,9 @@ class _MainMenu extends StatelessWidget {
                 ),
                 title: Text('Custom Theme'),
                 trailing: Switch.adaptive(
-                  value: true,
+                  value: appTheme.customTheme,
                   activeColor: Colors.blue,
-                  onChanged: (value) {},
+                  onChanged: (value) => appTheme.customTheme = value,
                 ),
               )
             ],
