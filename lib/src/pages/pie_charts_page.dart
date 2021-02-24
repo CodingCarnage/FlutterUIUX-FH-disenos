@@ -15,7 +15,6 @@ class _PieChartsPageState extends State<PieChartsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 39, 40, 34),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

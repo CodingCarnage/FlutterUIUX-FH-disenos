@@ -156,7 +156,7 @@ class _MainScroll extends StatelessWidget {
             maxHeight: screenSize * 0.2375,
             child: Container(
               alignment: Alignment.centerLeft,
-              color: Colors.white,
+              color: ThemeData.light().scaffoldBackgroundColor, //! Change
               child: _Header(),
             ),
           ),
