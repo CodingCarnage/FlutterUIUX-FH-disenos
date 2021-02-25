@@ -89,12 +89,19 @@ class _PinterestGridState extends State<PinterestGrid> {
 
   @override
   Widget build(BuildContext context) {
+    int count;
+    if(MediaQuery.of(context).size.width > 700) {
+      count = 3;
+    } else {
+      count = 2;
+    }
+
     return StaggeredGridView.countBuilder(
       controller: scrollController,
-      crossAxisCount: 4,
+      crossAxisCount: count,
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) => PinterestItem(index: index),
-      staggeredTileBuilder: (int index) => StaggeredTile.count(2, index.isEven ? 2 : 3),
+      staggeredTileBuilder: (int index) => StaggeredTile.count(1, index.isEven ? 2 : 3),
       mainAxisSpacing: 4.0,
       crossAxisSpacing: 4.0,
     );
