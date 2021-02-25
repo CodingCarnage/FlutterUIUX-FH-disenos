@@ -12,13 +12,26 @@ class SlideshowPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLarge;
+    if (MediaQuery.of(context).size.height > 500) {
+      isLarge = true;
+    } else {
+      isLarge = false;
+    }
+
+    final children = [
+      Expanded(child: _SlideshowWidget()),
+      Expanded(child: _SlideshowWidget()),
+    ];
+
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(child: _SlideshowWidget()),
-          Expanded(child: _SlideshowWidget()),
-        ],
-      ),
+      body: (isLarge)
+          ? Column(
+              children: children,
+            )
+          : Row(
+              children: children,
+            ),
     );
   }
 }
@@ -34,7 +47,7 @@ class _SlideshowWidget extends StatelessWidget {
     final accentColor = appTheme.currentTheme.accentColor;
     return Slideshow(
       dotsOnTop: false,
-      primaryColor: ( appTheme.darkTheme ) ? accentColor : Colors.orange,
+      primaryColor: (appTheme.darkTheme) ? accentColor : Colors.orange,
       secondaryColor: Colors.grey,
       primaryBulletSize: 20,
       secondaryBulletSize: 10,
