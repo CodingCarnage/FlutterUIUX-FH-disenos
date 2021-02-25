@@ -21,7 +21,13 @@ class MyApp extends StatelessWidget {
       theme: appTheme,
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: LauncherPage(),
+      home: OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) {
+          return Container(
+            child: LauncherPage(),
+          );
+        },
+      ),
     );
   }
 }
