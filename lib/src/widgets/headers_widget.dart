@@ -357,7 +357,7 @@ class IconHeader extends StatelessWidget {
           left: -55,
           child: FaIcon(
             this.icon,
-            size: screenSize.height * 0.2625,
+            size: 240,
             color: Colors.white.withOpacity(0.2),
           ),
         ),
@@ -376,7 +376,7 @@ class IconHeader extends StatelessWidget {
             const SizedBox(height: 20.0),
             FaIcon(
               icon,
-              size: screenSize.height * 0.075,
+              size: 50,
               color: Colors.white,
             ),
           ],
@@ -400,7 +400,7 @@ class _IconHeaderBackground extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: screenSize.height * 0.325,
+      height: 275,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80.0)),
         gradient: LinearGradient(

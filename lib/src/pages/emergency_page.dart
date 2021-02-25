@@ -11,6 +11,13 @@ class EmergencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLarge;
+    if (MediaQuery.of(context).size.height > 550) {
+      isLarge = true;
+    } else {
+      isLarge = false;
+    }
+
     final List<_ItemButton> items = <_ItemButton>[
       new _ItemButton(
         FontAwesomeIcons.carCrash,
@@ -91,17 +98,19 @@ class EmergencyPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: screenSize.height * 0.20),
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              children: <Widget>[
-                SizedBox(height: screenSize.height * 0.1),
-                ...itemMap,
-              ],
+          SafeArea(
+            child: Container(
+              margin: EdgeInsets.only(top: (isLarge) ? 180 : 10),
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                children: <Widget>[
+                  if (isLarge) SizedBox(height: 80),
+                  ...itemMap,
+                ],
+              ),
             ),
           ),
-          _Header(),
+          if (isLarge) _Header(),
         ],
       ),
     );

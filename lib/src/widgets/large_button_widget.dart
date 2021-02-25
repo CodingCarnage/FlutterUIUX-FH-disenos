@@ -57,7 +57,7 @@ class _LargeButtonForeground extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: screenSize.height * 0.1,
+      height: 100,
       margin: const EdgeInsets.all(20.0),
       child: Material(
         color: Colors.transparent,
@@ -69,7 +69,7 @@ class _LargeButtonForeground extends StatelessWidget {
               leading: FaIcon(
                 this.icon,
                 color: Colors.white,
-                size: screenSize.height * 0.05,
+                size: 40,
               ),
               title: Text(
                 this.text,
@@ -111,7 +111,7 @@ class _LargeButtonBackground extends StatelessWidget {
               top: -20.5,
               child: FaIcon(
                 this.icon,
-                size: screenSize.height * 0.1375,
+                size: 150,
                 color: Colors.white.withOpacity(0.2),
               ),
             ),
@@ -119,7 +119,7 @@ class _LargeButtonBackground extends StatelessWidget {
         ),
       ),
       width: double.infinity,
-      height: screenSize.height * 0.1,
+      height: 100,
       margin: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
