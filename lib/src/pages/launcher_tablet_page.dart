@@ -1,8 +1,9 @@
-import 'package:disenos/src/pages/slideshow_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
+import 'package:disenos/src/models/layout_model.dart';
 
 import 'package:disenos/src/routes/routes.dart';
 
@@ -14,6 +15,7 @@ class LauncherTabletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = Provider.of<ThemeChanger>(context);
+    final layoutModel = Provider.of<LayoutModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Diseños en Flutter - Tablet'),
@@ -32,7 +34,7 @@ class LauncherTabletPage extends StatelessWidget {
               height: double.infinity,
               color: (appTheme.darkTheme) ? Colors.grey : appTheme.currentTheme.accentColor),
           Expanded(
-            child: SlideshowPage(),
+            child: layoutModel.currentPage,
           ),
         ],
       ),
@@ -63,12 +65,8 @@ class _OptionsList extends StatelessWidget {
           color: appTheme.accentColor,
         ),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => pageRoutes[index].page,
-            ),
-          );
+          final layoutModel = Provider.of<LayoutModel>(context, listen: false);
+          layoutModel.currentPage = pageRoutes[index].page;
         },
       ),
     );

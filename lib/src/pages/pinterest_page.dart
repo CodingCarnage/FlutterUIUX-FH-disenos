@@ -1,9 +1,9 @@
-import 'package:disenos/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:disenos/src/theme/theme.dart';
 
 import 'package:disenos/src/widgets/pinterest_menu_widget.dart';
 

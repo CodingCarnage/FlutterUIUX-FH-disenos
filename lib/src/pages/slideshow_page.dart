@@ -1,10 +1,11 @@
-import 'package:disenos/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+
+import 'package:disenos/src/theme/theme.dart';
 
 import 'package:disenos/src/widgets/slideshow_widget.dart';
-import 'package:provider/provider.dart';
 
 class SlideshowPage extends StatelessWidget {
   const SlideshowPage({Key key}) : super(key: key);

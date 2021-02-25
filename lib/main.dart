@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:disenos/src/models/layout_model.dart';
+
 import 'package:disenos/src/pages/launcher_page.dart';
 import 'package:disenos/src/pages/launcher_tablet_page.dart';
 
 import 'package:disenos/src/theme/theme.dart';
 
 void main() => runApp(
-      ChangeNotifierProvider(
-        create: (_) => ThemeChanger(2),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ThemeChanger>(create: (_) => ThemeChanger(1)),
+          ChangeNotifierProvider<LayoutModel>(create: (_) => LayoutModel())
+        ],
         child: MyApp(),
       ),
     );

@@ -1,8 +1,10 @@
-import 'package:disenos/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'package:disenos/src/widgets/headers_widget.dart';
 import 'package:provider/provider.dart';
+
+import 'package:disenos/src/theme/theme.dart';
+
+import 'package:disenos/src/widgets/headers_widget.dart';
 
 class HeadersPage extends StatelessWidget {
   const HeadersPage({Key key}) : super(key: key);
