@@ -39,7 +39,7 @@ class _Header extends StatelessWidget {
         ),
         Stack(
           children: <Widget>[
-            Container(width: MediaQuery.of(context).size.width * 0.225),
+            SizedBox(width: 100),
             Positioned(
               bottom: 8,
               child: Container(
@@ -155,8 +155,8 @@ class _MainScroll extends StatelessWidget {
         SliverPersistentHeader(
           floating: true,
           delegate: _SliverCustomHeaderDelegate(
-            minHeight: screenSize * 0.225,
-            maxHeight: screenSize * 0.2375,
+            minHeight: 170,
+            maxHeight: 200,
             child: Container(
               alignment: Alignment.centerLeft,
               color: appTheme.scaffoldBackgroundColor,
